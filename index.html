@@ -118,6 +118,7 @@
             background-size: contain;
             pointer-events: none;
             z-index: 10000;
+            display: none; /* Hide by default */
         }
 
         .cursor-trail {
@@ -168,32 +169,70 @@
             }, 250);
 
             // Request fullscreen on page load
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-                document.documentElement.mozRequestFullScreen();
-            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
-                document.documentElement.webkitRequestFullscreen();
-            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-                document.documentElement.msRequestFullscreen();
+            function requestFullScreen() {
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+                    document.documentElement.mozRequestFullScreen();
+                } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                    document.documentElement.webkitRequestFullscreen();
+                } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+                    document.documentElement.msRequestFullscreen();
+                }
             }
-        });
 
-        // Update custom cursor position and create trail effect
-        document.addEventListener('mousemove', function(e) {
-            const cursor = document.getElementById('custom-cursor');
-            cursor.style.left = `${e.clientX}px`;
-            cursor.style.top = `${e.clientY}px`;
+            requestFullScreen();
 
-            const trail = document.createElement('div');
-            trail.className = 'cursor-trail';
-            trail.style.left = `${e.clientX}px`;
-            trail.style.top = `${e.clientY}px`;
-            document.body.appendChild(trail);
+            // Detect if the device is touch-enabled
+            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints;
 
-            setTimeout(() => {
-                trail.remove();
-            }, 1000);
+            if (isTouchDevice) {
+                // Handle touch events for custom cursor
+                document.addEventListener('touchstart', function(e) {
+                    const cursor = document.getElementById('custom-cursor');
+                    cursor.style.display = 'block';
+                    cursor.style.left = `${e.touches[0].clientX}px`;
+                    cursor.style.top = `${e.touches[0].clientY}px`;
+                });
+
+                document.addEventListener('touchmove', function(e) {
+                    const cursor = document.getElementById('custom-cursor');
+                    cursor.style.left = `${e.touches[0].clientX}px`;
+                    cursor.style.top = `${e.touches[0].clientY}px`;
+
+                    const trail = document.createElement('div');
+                    trail.className = 'cursor-trail';
+                    trail.style.left = `${e.touches[0].clientX}px`;
+                    trail.style.top = `${e.touches[0].clientY}px`;
+                    document.body.appendChild(trail);
+
+                    setTimeout(() => {
+                        trail.remove();
+                    }, 1000);
+                });
+
+                document.addEventListener('touchend', function() {
+                    const cursor = document.getElementById('custom-cursor');
+                    cursor.style.display = 'none';
+                });
+            } else {
+                // Update custom cursor position and create trail effect for mouse
+                document.addEventListener('mousemove', function(e) {
+                    const cursor = document.getElementById('custom-cursor');
+                    cursor.style.left = `${e.clientX}px`;
+                    cursor.style.top = `${e.clientY}px`;
+
+                    const trail = document.createElement('div');
+                    trail.className = 'cursor-trail';
+                    trail.style.left = `${e.clientX}px`;
+                    trail.style.top = `${e.clientY}px`;
+                    document.body.appendChild(trail);
+
+                    setTimeout(() => {
+                        trail.remove();
+                    }, 1000);
+                });
+            }
         });
     </script>
 </body>
