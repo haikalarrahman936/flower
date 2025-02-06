@@ -19,6 +19,40 @@ body {
   overflow: hidden;
   perspective: 1000px;
 }
+
+.intro {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+}
+
+.intro h1 {
+  font-size: 3em;
+  margin-bottom: 0.5em;
+}
+
+.intro p {
+  font-size: 1.5em;
+  margin-bottom: 1em;
+}
+
+.intro button {
+  padding: 0.5em 1em;
+  font-size: 1em;
+  color: white;
+  background-color: #028137;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.intro button:hover {
+  background-color: #026b2a;
+}
+
 .night {
   position: fixed;
   left: 50%;
