@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;700&display=swap');
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'SF Pro Display', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #ff837b; /* Add background color here */
+            cursor: none; /* Hide the default cursor */
+        }
+
+        #container {
+            width: 300px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #container.fin .path-1, 
+        #container.fin .path-2, 
+        #container.fin .path-3 {
+            stroke-dashoffset: 0;
+        }
+
+        #container.fin .path-4 {
+            stroke-width: 18px;
+        }
+
+        .path {
+            fill: none;
+            stroke: #ffffff; /* Change stroke color to white */
+            stroke-width: 18px;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 10px white); /* Add white glow effect */
+        }
+
+        .path-1 {
+            stroke-dasharray: 1850 2000;
+            stroke-dashoffset: 1851;
+            transition: 5s linear;
+        }
+
+        .path-2 {
+            stroke-dasharray: 260 1000;
+            stroke-dashoffset: 261;
+            transition: 1.2s linear 5.2s;
+        }
+
+        .path-3 {
+            stroke-dasharray: 100 1000;
+            stroke-dashoffset: 101;
+            transition: 1s linear 6.5s;
+        }
+
+        .path-4 {
+            stroke-width: 0;
+            transition: 0.1s linear 7.5s;
+        }
+
+        .button {
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: auto;
+            margin-top: 500px;
+            color: rgb(255, 255, 255);
+            border-radius: 200px;
+            width: 330px;
+            height: 50px;
+            background-color: rgb(211, 24, 70);
+            cursor: pointer; /* Ensure the button has a pointer cursor */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 8px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .button:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            padding: 10px 0;
+            font-size: 14px;
+            visibility: hidden; /* Hide the footer */
+        }
+
+        .custom-cursor {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: url('https://example.com/star-cursor.png') no-repeat center center;
+            background-size: contain;
+            pointer-events: none;
+            z-index: 10000;
+        }
+
+        .cursor-trail {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.8); /* White color */
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            animation: fadeOut 1s forwards;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <button class="button" onclick="window.location.href='flower.html'">Klik untuk melihat bunga Sayang &#128522</button>
+    </div>
+    <div id="container">
+        <svg id="hello-svg" data-name="hello" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 582 197">
+            <title>Hello</title>
+            <path class="path path-1" d="M208,338c38-16.67,73.74-45.72,97.33-66,21.33-18.33,32.67-35.67,37.33-52.67C347.12,203.12,344,192,332,192c-11,0-21,10.33-24.94,27.68-4.52,19.89-22.06,107.82-29.39,149,15.67-72.33,36.33-81.33,53.67-81.33,22.33,0,24.67,18.67,19.42,39-5.43,21.07-7.42,44.32,17.91,44.32,18,0,35.53-8.17,52.67-20,14-9.67,23-24,23-40,0-13.42-8-23.33-20.67-23.33s-24.33,12-24.33,33.33c0,27,16.33,48,44,48,25.67,0,47.67-19.67,62-44.67,13.61-23.74,30.67-64.67,33.33-92.67s-5.33-36-18.67-36-24.67,17.33-28.67,43.33S486,302,491.33,330s28,37.67,46,37.67,38.17-15.67,52-37c16.54-25.51,35.87-67.45,38.67-102,2-24.67-8.67-33.33-20-33.33-14.67,0-23.33,13.33-28,38-4.5,23.81-8,64-2,94,4.64,23.21,25.33,40.33,44.67,40.33s32.67-19,36.67-42.33" transform="translate(-199 -183)"/>
+            <path class="path path-2" d="M697.33,287.33C672,287.33,661.33,305,659,327c-2.81,26.54,10.33,41.67,29.67,41.67,22,0,34.54-20.78,36.67-40.67,2-18.67-7.39-39.13-28-40.67" transform="translate(-199 -183)"/>
+            <path class="path path-3" d="M714.8,295.12c12.11,12.26,43.53,9.55,56.53-5.79" transform="translate(-199 -183)"/>
+            <line class="path path-4" x1="561" y1="181.67" x2="561" y2="181.67"/>
+        </svg>
+    </div>
+    <footer>
+        Copyright by Kall
+    </footer>
+    <div class="custom-cursor" id="custom-cursor"></div>
+    <script>
+        $(document).ready(function() {
+            setTimeout(function() {
+                $('#container').addClass('fin');
+            }, 250);
+
+            // Request fullscreen on page load
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+                document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+                document.documentElement.msRequestFullscreen();
+            }
+        });
+
+        // Update custom cursor position and create trail effect
+        document.addEventListener('mousemove', function(e) {
+            const cursor = document.getElementById('custom-cursor');
+            cursor.style.left = `${e.clientX}px`;
+            cursor.style.top = `${e.clientY}px`;
+
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            trail.style.left = `${e.clientX}px`;
+            trail.style.top = `${e.clientY}px`;
+            document.body.appendChild(trail);
+
+            setTimeout(() => {
+                trail.remove();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
